@@ -4,20 +4,31 @@
     <div class="col-md-6">
       <h1>Register or <a routerLink="/login">Signin</a> </h1>
       
-      <form (submit)="register()">
+      <form role="form" [formGroup]="loginForm" (submit)="register()">
         <div class="form-group">
-          <label for="name">Full name</label>
-          <input type="text" class="form-control" name="name" placeholder="Enter your name" [(ngModel)]="credentials.name">
+          <label for="name">Full Name</label>
+          <input type="name" class="form-control" placeholder="Enter name" name="name" formControlName="name" >
+        </div>
+        <div class="form-group">
+          <label for="contactnumber">Contact Number</label>
+          <input type="number" class="form-control contactnumber" name="contactnumber" placeholder="Enter contact number" formControlName="contactnumber" (keyup)="checkAlready($event)" >
+          <div class="errcontactnumber"></div>
+        </div>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control username" name="username" placeholder="Enter username" formControlName="username" (keyup)="checkAlready($event)" >
+          <div class="errusername"></div>
         </div>
         <div class="form-group">
           <label for="email">Email address</label>
-          <input type="email" class="form-control" name="email" placeholder="Enter email" [(ngModel)]="credentials.email">
+          <input type="email" class="form-control email" placeholder="Enter email" formControlName="email" (keyup)="checkAlready($event)" >
+          <div class="erremail"></div>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="credentials.password">
+          <input type="password" class="form-control" name="password" placeholder="Password" formControlName="password" >
         </div>
-        <button type="submit" class="btn btn-default">Register!</button>
+        <button type="submit" class="btn btn-default" [disabled]="!loginForm.valid">Register!</button>
       </form>
     </div>
   </div>

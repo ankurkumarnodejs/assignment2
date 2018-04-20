@@ -8,6 +8,16 @@ var userSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
+  username: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  contactnumber: {
+    type: String,
+    unique: true,
+    required: true
+  },
   name: {
     type: String,
     required: true

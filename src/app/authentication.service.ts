@@ -7,7 +7,9 @@ import { Router } from '@angular/router';
 export interface UserDetails {
   _id: string;
   email: string;
+  username: string;
   name: string;
+  contactnumber: string;
   exp: number;
   iat: number;
 }
@@ -19,7 +21,9 @@ interface TokenResponse {
 export interface TokenPayload {
   email: string;
   password: string;
+  username?: string;
   name?: string;
+  contactnumber?: string;
 }
 
 @Injectable()
@@ -61,7 +65,7 @@ export class AuthenticationService {
     }
   }
 
-  private request(method: 'post'|'get', type: 'login'|'register'|'profile', user?: TokenPayload): Observable<any> {
+  private request(method: 'post'|'get', type: 'login'|'register'|'profile'|'check', user?: TokenPayload): Observable<any> {
     let base;
 
     if (method === 'post') {
@@ -86,6 +90,10 @@ export class AuthenticationService {
     return this.request('post', 'register', user);
   }
 
+  public checkAlready(user: TokenPayload): Observable<any> {
+    return this.request('post', 'check', user);
+  }
+
   public login(user: TokenPayload): Observable<any> {
     return this.request('post', 'login', user);
   }
@@ -97,4 +105,5 @@ export class AuthenticationService {
   public logout(): void {
     this.token = '';
   }
+  
 }
