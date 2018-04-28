@@ -65,13 +65,13 @@ export class AuthenticationService {
     }
   }
 
-  private request(method: 'post'|'get', type: 'login'|'register'|'profile'|'check', user?: TokenPayload): Observable<any> {
+  private request(method: 'post'|'get', type: 'login'|'register'|'profile'|'check' | 'addcontact', user?: TokenPayload): Observable<any> {
     let base;
 
     if (method === 'post') {
-      base = this.http.post(`/api/${type}`, user);
+      base = this.http.post(`http://localhost:3000/api/${type}`, user);
     } else {
-      base = this.http.get(`/api/${type}`, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      base = this.http.get(`http://localhost:3000/api/${type}`, { headers: { Authorization: `Bearer ${this.getToken()}` }});
     }
 
     const request = base.pipe(
@@ -88,6 +88,10 @@ export class AuthenticationService {
 
   public register(user: TokenPayload): Observable<any> {
     return this.request('post', 'register', user);
+  }
+  
+  public addContact(user: TokenPayload): Observable<any> {
+    return this.request('post', 'addcontact', user);
   }
 
   public checkAlready(user: TokenPayload): Observable<any> {

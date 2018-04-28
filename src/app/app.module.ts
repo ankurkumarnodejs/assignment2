@@ -11,11 +11,19 @@ import { RegisterComponent } from './register/register.component';
 
 import { AuthenticationService } from './authentication.service';
 import { AuthGuardService } from './auth-guard.service';
+import { MyContactComponent,MyContactListComponent,MyContactAddComponent, MyContactEditComponent } from './my-contact/my-contact.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent }, 
+  { path: 'my-contact', component: MyContactComponent,  children: [
+      {path : '', component: MyContactListComponent},
+      {path : 'list', component: MyContactListComponent},
+      {path : 'add', component: MyContactAddComponent},
+      {path : 'edit', component: MyContactEditComponent},
+    
+    ]},
   { path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuardService] },
   { path: '**', redirectTo: '' }
 ];
@@ -26,6 +34,7 @@ const routes: Routes = [
     WelcomeComponent,
     LoginComponent,
     RegisterComponent,
+    MyContactComponent,MyContactListComponent,MyContactAddComponent, MyContactEditComponent,
    
   ],
   imports: [

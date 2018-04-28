@@ -1,0 +1,47 @@
+
+  <h5 class="text-center">Add new Contact</h5>
+  <hr>
+  <div class="container-fluid">
+  <form [formGroup]="invoiceForm" (ngSubmit)="saveContact()">
+  <div class="row" formArrayName="itemRows">
+    <!-- Check the correct way to iterate your form array -->
+    <div class="col-lg-3" *ngFor="let itemrow of invoiceForm.controls.itemRows.controls; let i=index"  [formGroupName]="i">
+      <div class="card">
+        <div class="card-body">
+      <h5> Contact {{ i + 1 }} <button *ngIf="invoiceForm.controls.itemRows.controls.length > 1" (click)="deleteRow(i)" class="btn btn-sm btn-danger float-right">X</button></h5>
+      <div class="form-group">
+        <label>Name</label>
+        <input formControlName="name" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Contact Number</label>
+        <input type="number" formControlName="contactnumber" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" formControlName="email" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Profile picture url</label>
+        <input type="text" formControlName="profileurl" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Contact Type</label>
+        <select formControlName="contacttype" class="form-control">
+          <option value="family">Family</option>
+          <option value="professional">Professional</option>
+          <option value="friend">Friend</option>
+        </select>
+      </div>
+      
+       </div>
+      </div>
+    </div>
+  </div>
+
+<div class="text-center mt-15"> 
+  <button type="button" (click)="addNewRow()" class="btn btn-sm btn-info">Add more</button>
+  <button type="submit" class="btn btn-sm btn-success" [disabled]="!invoiceForm.valid">Save</button>
+</div>
+</form>
+ </div>

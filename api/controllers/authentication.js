@@ -1,6 +1,7 @@
 var passport = require('passport');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Contact = require('../models/Contact');
 
 var sendJSONresponse = function(res, status, content) {
   res.status(status);
@@ -30,6 +31,42 @@ module.exports.register = function(req, res) {
 
 };
 
+
+module.exports.addContact = function(req, res){
+  var contacts = req.body.contacts;
+   console.log(req.body);
+   Contact.collection.insert(contacts, (err, docs) => {
+      if (err){ 
+        console.log(err);
+         res.json({error:true, message: err})
+      } else {
+        console.log(docs);
+         res.json({error:false, message: 'Inserted data.'})
+        
+
+      }
+    });
+}
+module.exports.listContact = function(req, res){
+   Contact.find({userId: req.body.userId}, (err, docs) => {
+      if (err){ 
+          res.json({error:true, message: err})
+      } else {
+          res.json({error:false, message: docs})
+      }
+    });
+}
+
+module.exports.updateContact = function(req, res){
+   var fields = req.body;
+   Contact.update({userId: req.body.userId}, {fields} , {new : true}, (err, docs) => {
+      if (err){ 
+          res.json({error:true, message: err})
+      } else {
+          res.json({error:false, message: docs})
+      }
+    });
+}
 
 module.exports.check = function(req, res) {
   User.find(req.body, (err, data)=>{
